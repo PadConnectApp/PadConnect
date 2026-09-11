@@ -15,7 +15,7 @@ navigationRuntimeKtx = "2.10.0"
 profileinstaller = "1.4.1"
 materialSwitch = "1.0.3"
 material3 = "1.4.0"
-uiTextGoogleFonts = "1.12.0"
+uiTextGoogleFonts = "1.12.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
