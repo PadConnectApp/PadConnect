@@ -131,16 +131,8 @@ class GPEmulationViewModel : ViewModel() {
         viewModelScope.launch {
             GlobalConfig.enableRumbleFlow
                 .distinctUntilChanged()
-                .collect { enableRumble ->
-                    if (_isTransportConnected.value) {
-                        val result = DiscoverySender.discoverReceiver(
-                            buildClientFeatures(
-                                enableRumble = enableRumble,
-                                showLatency = true
-                            )
-                        )
-                        Log.i(LOG_TAG, "Features updated dynamically: ${result?.features}")
-                    }
+                .collect { _ ->
+                    if (_isTransportConnected.value) transport?.stop()
                 }
         }
     }

@@ -91,7 +91,6 @@ dependencies {
     implementation(libs.androidx.compose.runtime)
     implementation(libs.com.github.ishan09811.materialswitch)
     implementation(libs.compose.preferences)
-    implementation(libs.androidx.compose.ui.text.google.fonts)
     implementation(libs.androidx.profileinstaller)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -323,8 +323,6 @@ fun GPEmulationScreen(
                                 opacity = opacity ?: el.opacity,
                                 enabled = enabled ?: el.enabled
                             )
-
-                            else -> el
                         }
                         tempLayout = tempLayout.updateElement(updated.id) { updated }
                     }

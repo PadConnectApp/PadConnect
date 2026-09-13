@@ -15,7 +15,6 @@ navigationRuntimeKtx = "2.10.1"
 profileinstaller = "1.4.1"
 materialSwitch = "1.0.3"
 material3 = "1.4.0"
-uiTextGoogleFonts = "1.12.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -40,7 +39,6 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 com-github-ishan09811-materialswitch = { group = "com.github.Ishan09811", name = "materialswitch", version.ref = "materialSwitch" }
-androidx-compose-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

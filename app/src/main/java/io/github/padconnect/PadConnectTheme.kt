@@ -13,6 +13,7 @@ import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
@@ -24,7 +25,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowInsetsControllerCompat
-import io.github.padconnect.theme.PadConnectTypography
 import io.github.padconnect.utils.settings.GlobalConfig
 
 object colors {
@@ -208,7 +208,7 @@ fun PadConnectTheme(
 
     MaterialTheme(
         colorScheme = colors,
-        typography = PadConnectTypography,
+        typography = typography,
         content = content,
     )
 }
