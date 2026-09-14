@@ -77,10 +77,12 @@ import io.github.padconnect.R
 import io.github.padconnect.dialogs.AlertDialogQueue
 import io.github.padconnect.dialogs.AppDialog
 import io.github.padconnect.transport.TransportManager
+import io.github.padconnect.ui.main.elements.DPad
 import io.github.padconnect.utils.AnalogStickElement
 import io.github.padconnect.utils.ButtonElement
 import io.github.padconnect.utils.ControllerElement
 import io.github.padconnect.utils.ControllerLayout
+import io.github.padconnect.utils.DPadElement
 import io.github.padconnect.utils.LayoutStorage
 import io.github.padconnect.utils.LayoutStorage.updateElement
 import io.github.padconnect.utils.settings.GlobalConfig
@@ -95,19 +97,8 @@ fun GPEmulationScreen(
     isEditMode: Boolean = false
 ) {
     val context = LocalContext.current
-    val activity = context as? Activity
 
     val orientationMode by GlobalConfig.orientationModeFlow.collectAsState(0)
-
-    when (orientationMode) {
-        0 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
-        1 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
-        2 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-        3 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
-        4 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
-        5 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        6 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
-    }
 
     var eLayout by remember {
         mutableStateOf(layout)
@@ -151,7 +142,25 @@ fun GPEmulationScreen(
 
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
-            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        }
+    }
+
+    DisposableEffect(orientationMode) {
+        val activity = context as? Activity ?: return@DisposableEffect onDispose {}
+        val originalOrientation = activity.requestedOrientation
+
+        when (orientationMode) {
+            0 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            1 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+            2 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+            3 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+            4 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+            5 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+            6 -> activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+        }
+
+        onDispose {
+            activity.requestedOrientation = originalOrientation
         }
     }
 
@@ -311,6 +320,20 @@ fun GPEmulationScreen(
                         }
                     }
                 )
+
+                is DPadElement -> DPad(
+                    dpad = element,
+                    transport = viewModel.transport,
+                    screenWidth = maxWidth,
+                    screenHeight = maxHeight,
+                    controlPointers = controlPointers,
+                    isEditMode = isEditMode,
+                    isSelected = selectedElementId == element.id,
+                    onSelect = { selectedElementId = element.id },
+                    onUpdate = { updated ->
+                        eLayout = eLayout.updateElement(updated.id) { updated }
+                    }
+                )
             }
         }
 
@@ -334,6 +357,12 @@ fun GPEmulationScreen(
                             )
 
                             is AnalogStickElement -> el.copy(
+                                size = size ?: el.size,
+                                opacity = opacity ?: el.opacity,
+                                enabled = enabled ?: el.enabled
+                            )
+
+                            is DPadElement -> el.copy(
                                 size = size ?: el.size,
                                 opacity = opacity ?: el.opacity,
                                 enabled = enabled ?: el.enabled
@@ -799,6 +828,7 @@ fun EditPanel(
                                 when (it) {
                                     is ButtonElement -> onUpdate(it.copy(size = value))
                                     is AnalogStickElement -> onUpdate(it.copy(size = value))
+                                    is DPadElement -> onUpdate(it.copy(size = value))
                                 }
                             }
                         }
@@ -833,6 +863,7 @@ fun EditPanel(
                                 when (it) {
                                     is ButtonElement -> onUpdate(it.copy(opacity = value))
                                     is AnalogStickElement -> onUpdate(it.copy(opacity = value))
+                                    is DPadElement -> onUpdate(it.copy(opacity = value))
                                 }
                             }
                         }
@@ -872,6 +903,7 @@ fun EditPanel(
                                     when (it) {
                                         is ButtonElement -> onUpdate(it.copy(enabled = enabled))
                                         is AnalogStickElement -> onUpdate(it.copy(enabled = enabled))
+                                        is DPadElement -> onUpdate(it.copy(enabled = enabled))
                                     }
                                 }
                             }

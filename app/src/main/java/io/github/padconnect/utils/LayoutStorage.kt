@@ -74,10 +74,18 @@ object LayoutStorage {
                 ),
 
                 AnalogStickElement(
-                    id = "dpad",
+                    id = "analog_stick",
                     x = 0.22f,
                     y = 0.55f,
                     size = 0.18f,
+                    opacity = 0.8f
+                ),
+
+                DPadElement(
+                    id = "dpad",
+                    x = 0.40f,
+                    y = 0.73f,
+                    size = 0.10f,
                     opacity = 0.8f
                 ),
 
