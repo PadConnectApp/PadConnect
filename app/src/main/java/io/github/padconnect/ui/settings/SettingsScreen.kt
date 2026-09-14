@@ -249,6 +249,16 @@ fun DisplaySettingsScreen(
                     onValueChange = { GlobalConfig.SHOW_LATENCY.boolean = it }
                 )
             }
+
+            item(key = "orientation_mode") {
+                IntSetting(
+                    title = "Orientation",
+                    value = { GlobalConfig.ORIENTATION_MODE.int },
+                    onValueChange = { GlobalConfig.ORIENTATION_MODE.int = it },
+                    labelsId = R.array.orientation_mode_labels,
+                    valuesId = R.array.orientation_mode_values
+                )
+            }
         }
     }
 }

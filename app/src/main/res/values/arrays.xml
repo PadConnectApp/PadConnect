@@ -27,4 +27,24 @@
         <item>1</item>
         <item>2</item>
     </integer-array>
+
+    <string-array name="orientation_mode_labels">
+        <item>System</item>
+        <item>Landscape (Auto)</item>
+        <item>Landscape (Force)</item>
+        <item>Landscape (Force Reverse)</item>
+        <item>Portrait (Auto)</item>
+        <item>Portrait (Force)</item>
+        <item>Portrait (Force Reverse)</item>
+    </string-array>
+
+    <integer-array name="orientation_mode_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+    </integer-array>
 </resources>

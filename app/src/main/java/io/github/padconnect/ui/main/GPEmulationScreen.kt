@@ -11,6 +11,7 @@ package io.github.padconnect.ui.main
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectDragGestures
@@ -86,7 +87,7 @@ import io.github.padconnect.utils.settings.GlobalConfig
 import io.github.padconnect.viewmodel.GPEmulationViewModel
 import kotlin.math.roundToInt
 
-@SuppressLint("UnusedBoxWithConstraintsScope")
+@SuppressLint("UnusedBoxWithConstraintsScope", "SourceLockedOrientationActivity")
 @Composable
 fun GPEmulationScreen(
     layout: ControllerLayout,
@@ -94,6 +95,19 @@ fun GPEmulationScreen(
     isEditMode: Boolean = false
 ) {
     val context = LocalContext.current
+    val activity = context as? Activity
+
+    val orientationMode by GlobalConfig.orientationModeFlow.collectAsState(0)
+
+    when (orientationMode) {
+        0 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        1 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+        2 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        3 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE
+        4 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT
+        5 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        6 -> activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_REVERSE_PORTRAIT
+    }
 
     var eLayout by remember {
         mutableStateOf(layout)
@@ -137,6 +151,7 @@ fun GPEmulationScreen(
 
         onDispose {
             lifecycleOwner.lifecycle.removeObserver(observer)
+            activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         }
     }
 

@@ -31,6 +31,7 @@ data class ConfigModel(
     val enableRumble: Boolean = true,
     // (Display)
     val showLatency: Boolean = true,
+    val orientationMode: Int = 0,
     // Theme Settings
     val themeMode: Int = 0
 )
@@ -52,6 +53,8 @@ object GlobalConfig {
     val themeMode = configFlow.map { it.themeMode }.distinctUntilChanged()
     val enableRumbleFlow = configFlow.map { it.enableRumble }.distinctUntilChanged()
     val showLatencyFlow = configFlow.map { it.showLatency }.distinctUntilChanged()
+
+    val orientationModeFlow = configFlow.map { it.orientationMode }.distinctUntilChanged()
 
     fun init(context: Context) {
         configFile = File(context.getExternalFilesDir(null), "config.json")
@@ -108,6 +111,15 @@ object GlobalConfig {
             get() = config.showLatency
             set(value) {
                 config = config.copy(showLatency = value)
+                save()
+            }
+    }
+
+    object ORIENTATION_MODE {
+        var int: Int
+            get() = config.orientationMode
+            set(value) {
+                config = config.copy(orientationMode = value)
                 save()
             }
     }
