@@ -49,8 +49,8 @@ class UdpTransport(
         private const val LOG_TAG = "UdpTransport"
         private const val PACKET_SIZE = 21 // 1(type) + 2+2+2+2+2(axes) + 1+1(triggers) + 8(timestamp)
         private const val RECV_BUFFER_SIZE = 64
-        private const val TRIGGER_PRESSED: Byte = 100
-        private const val TRIGGER_RELEASED: Byte = 0
+        private const val TRIGGER_PRESSED: UByte = 255u
+        private const val TRIGGER_RELEASED: UByte = 0u
         private const val RECEIVER_TIMEOUT_MS = 2000L
 
         private const val MAX_CONSECUTIVE_ERRORS_BEFORE_REST = 3
@@ -73,8 +73,8 @@ class UdpTransport(
                 sendBuffer.putShort(state.ly)
                 sendBuffer.putShort(state.rx)
                 sendBuffer.putShort(state.ry)
-                sendBuffer.put(state.lt)
-                sendBuffer.put(state.rt)
+                sendBuffer.put(state.lt.toByte())
+                sendBuffer.put(state.rt.toByte())
             }
             sendBuffer.putLong(System.nanoTime())
 

@@ -14,8 +14,8 @@ data class GamepadState(
     var ly: Short = 0,
     var rx: Short = 0,
     var ry: Short = 0,
-    var lt: Byte = 0,
-    var rt: Byte = 0
+    var lt: UByte = 0u,
+    var rt: UByte = 0u
 )
 
 
