@@ -14,7 +14,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.github.padconnect.dialogs.AlertDialogQueue
 import io.github.padconnect.dialogs.AppDialog
-import io.github.padconnect.transport.TransportManager
+import io.github.padconnect.transport.GamepadTransport
+import io.github.padconnect.transport.UdpTransport
 import io.github.padconnect.utils.DiscoverySender
 import io.github.padconnect.utils.DiscoverySender.buildClientFeatures
 import io.github.padconnect.utils.settings.GlobalConfig
@@ -42,7 +43,7 @@ class GPEmulationViewModel : ViewModel() {
     private var lastUiUpdate = 0L
     private val uiIntervalNs = 1000_000_000L // 1000ms = 1Hz
 
-    var transport: TransportManager? = null
+    var transport: GamepadTransport? = null
 
     val onLatencyStatsReceive: (Double) -> Unit = { latency ->
         val now = System.nanoTime()
@@ -94,9 +95,9 @@ class GPEmulationViewModel : ViewModel() {
                         break
                     }
 
-                    transport = TransportManager(result.host, result.port, onLatencyStatsReceive)
+                    transport = UdpTransport(result.host, result.port, onLatencyStatsReceive)
                     _isTransportConnected.value = true
-                    transport!!.start()
+                    (transport as UdpTransport).start()
                     Log.i(LOG_TAG, "Successfully connected")
                     break
                 }
@@ -108,14 +109,14 @@ class GPEmulationViewModel : ViewModel() {
         receiverJob?.cancel()
         receiverJob = viewModelScope.launch {
             while (isActive) {
-                val active = transport?.isReceiverActive() == true
+                val active = (transport as? UdpTransport)?.isReceiverActive() == true
 
                 if (_isReceiverActive.value != active) {
                     _isReceiverActive.value = active
 
                     if (!active && _isTransportConnected.value) {
                         Log.i(LOG_TAG, "Receiver lost! Tearing down and restarting discovery...")
-                        transport?.stop()
+                        (transport as? UdpTransport)?.stop()
                         transport = null
                         _isTransportConnected.value = false
                         searchReceiver()
@@ -132,7 +133,7 @@ class GPEmulationViewModel : ViewModel() {
             GlobalConfig.enableRumbleFlow
                 .distinctUntilChanged()
                 .collect { _ ->
-                    if (_isTransportConnected.value) transport?.stop()
+                    if (_isTransportConnected.value) (transport as? UdpTransport)?.stop()
                 }
         }
     }
@@ -140,6 +141,6 @@ class GPEmulationViewModel : ViewModel() {
     override fun onCleared() {
         searchJob?.cancel()
         receiverJob?.cancel()
-        transport?.stop()
+        (transport as? UdpTransport)?.stop()
     }
 }

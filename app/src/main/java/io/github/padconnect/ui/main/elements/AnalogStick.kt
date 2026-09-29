@@ -39,7 +39,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import io.github.padconnect.transport.TransportManager
+import io.github.padconnect.transport.GamepadTransport
 import io.github.padconnect.utils.AnalogStickElement
 import kotlin.math.roundToInt
 
@@ -47,7 +47,7 @@ import kotlin.math.roundToInt
 @Composable
 fun AnalogStick(
     dpad: AnalogStickElement,
-    transport: TransportManager?,
+    transport: GamepadTransport?,
     screenWidth: Dp,
     screenHeight: Dp,
     controlPointers: MutableSet<PointerId>,

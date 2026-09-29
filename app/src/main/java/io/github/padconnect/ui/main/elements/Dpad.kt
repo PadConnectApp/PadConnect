@@ -45,7 +45,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import io.github.padconnect.transport.TransportManager
+import io.github.padconnect.transport.GamepadTransport
 import io.github.padconnect.utils.DPadElement
 import io.github.padconnect.utils.GamepadKey
 
@@ -53,7 +53,7 @@ import io.github.padconnect.utils.GamepadKey
 @Composable
 fun DPad(
     dpad: DPadElement,
-    transport: TransportManager?,
+    transport: GamepadTransport?,
     screenWidth: Dp,
     screenHeight: Dp,
     controlPointers: MutableSet<PointerId>,
