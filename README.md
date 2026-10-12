@@ -15,7 +15,7 @@
 
 > **Low latency virtual gamepad** — built with **Kotlin** and **Jetpack Compose**
 
-PadConnect lets your phone act as a **real controller (Xbox 360/DualShock4)** for a PC. It streams gamepad input with very low latency and exposes it on Windows using **ViGEm** and natively in linux.
+PadConnect lets your phone act as a **real controller (Xbox 360/DualShock4)** for a PC. It streams gamepad input with very low latency and exposes it on Windows using ViGEm and uinput in linux.
 
 This project is split into two parts:
 
@@ -30,7 +30,6 @@ This project is split into two parts:
 * **Low latency input streaming** (UDP based)
 * Built with **Kotlin**
 * UI powered by **Jetpack Compose**
-* Windows receiver using **ViGEm**
 * Supports buttons, triggers, sticks, and D-Pad
 * Works over **local Wi-Fi** (no internet required)
 
@@ -130,6 +129,7 @@ Linux: PadConnectReceiver.AppImage
 * Buttons: A / B / X / Y
 * Shoulder buttons
 * Right Analog Stick (it is mostly used for changing camera angle so emulated as touch screen like change camera angle in a mobile game)
+* Dpad
 * Left Analog Stick
 * R3 and L3 added as separate buttons
 
