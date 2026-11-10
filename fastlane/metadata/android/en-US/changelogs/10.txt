@@ -1,0 +1,19 @@
+• update dependencies
+• update materialSwitch to 1.0.3 and composePreferences to 0.4.2
+• build: use commit hashes instead of version for security
+• Update dependency androidx.compose:compose-bom to v2026.09.00
+• add orientation setting
+• Implement dpad
+• refactor GPEmulationScreen
+• fix RT and LT buttons
+• Update agp to v9.4.1
+• Update dependency androidx.core:core-ktx to v1.19.1
+• Update dependency androidx.navigation:navigation-compose to v2.10.2
+• Update dependency androidx.navigation:navigation-runtime-ktx to v2.10.2
+• remove TransportManager
+• Update kotlin monorepo to v2.4.21
+• Update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.12.0
+• Update agp to v9.5.1
+• Update Gradle to v9.9.0
+
+<b>Existing layouts are expected to break in this update, in order to fix it you will need to create a new layout</b>
